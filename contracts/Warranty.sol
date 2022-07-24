@@ -24,4 +24,8 @@ contract MyNFT is ERC721URIStorage, Ownable {
 
         return newItemId;
     }
+
+    function burnNFT(uint256 tokenId) public onlyOwner{
+        _burn(tokenId);
+    }
 }
