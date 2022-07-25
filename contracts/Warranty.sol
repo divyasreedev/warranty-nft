@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MyNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+    Counters.Counter public tokenIds;
 
     constructor() public ERC721("Warranty", "NFT") {}
 
@@ -16,9 +16,9 @@ contract MyNFT is ERC721URIStorage, Ownable {
         public onlyOwner
         returns (uint256)
     {
-        _tokenIds.increment();
+        tokenIds.increment();
 
-        uint256 newItemId = _tokenIds.current();
+        uint256 newItemId = tokenIds.current();
         _mint(recipient, newItemId);
         _setTokenURI(newItemId, tokenURI);
 
