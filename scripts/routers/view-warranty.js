@@ -4,7 +4,7 @@ const warrantySchema = require('../models/warranty');
 
 router.get('/', async (req, res) =>  {
     try {
-        const dbResponse = await warrantySchema.find({});
+        //const dbResponse = await warrantySchema.find({});
         //const dbResponse = await warrantySchema.find({expirationDate: {$gte: Date.now()}});
         res.status(200).send({
             "activeWarranties": dbResponse,
