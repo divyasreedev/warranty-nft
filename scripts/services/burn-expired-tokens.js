@@ -34,7 +34,7 @@ const burnExpiredTokens = async () => {
   const dbResponse = await warrantySchema.find({
     expirationDate: { $lte: Date.now() },
   });
-  console.log(dbResponse);
+  //console.log(dbResponse);
   const res = await warrantySchema.deleteMany({
     expirationDate: { $lte: Date.now() },
   });

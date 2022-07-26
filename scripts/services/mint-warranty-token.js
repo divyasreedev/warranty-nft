@@ -20,8 +20,13 @@ const contractAddress = process.env.CONTRACT_ADDRESS;
 const myNftContract = new ethers.Contract(contractAddress, abi, signer);
 
 // Get the NFT Metadata IPFS URL
-const tokenUri =
-  "https://gateway.pinata.cloud/ipfs/QmYueiuRNmL4MiA2GwtVMm6ZagknXnSpQnB3z2gWbz36hP";
+const tokenUri = {
+  productId: "123",
+  walletAddress: "678",
+  warrantyDetails: "hello world",
+  issueDate: "23-45-2001",
+  expirationDate: "06-09-2001",
+};
 
 // Call mintNFT function
 const mintNFT = async () => {
@@ -29,8 +34,8 @@ const mintNFT = async () => {
     "0xDE4A952a256F730Fa518a3d1507F8624a2DcB0C6",
     tokenUri
   );
-  const result = await nftTxn.wait();
+  await nftTxn.wait();
   return myNftContract.tokenIds;
 };
-mintNFT();
+// mintNFT();
 module.exports = mintNFT;

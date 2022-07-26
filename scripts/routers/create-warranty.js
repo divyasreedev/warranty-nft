@@ -5,17 +5,20 @@ const warrantySchema = require("../models/warranty");
 router.post("/", async (req, res) => {
   try {
     const warranty = new warrantySchema({
-      contractAddress: req.body.contractAddress,
-      tokenId: req.body.tokenId,
+      productId: req.body.productId,
+      walletAddress: req.body.walletAddress,
+      warrantyDetails: req.body.warrantyDetails,
+      issueDate: req.body.issueDate,
       expirationDate: req.body.expirationDate,
     });
     const dbResponse = await warranty.save();
     res.status(200).send({
-      "Record Created": dbResponse,
+      status: "success",
     });
   } catch (e) {
     res.status(500).send({
-      "Error Caught": e,
+      status: "error",
+      error: e,
     });
   }
 });

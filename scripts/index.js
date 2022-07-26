@@ -4,6 +4,7 @@ const mongodb = require("mongodb").MongoClient;
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const burnExpiredTokens = require("./services/burn-expired-tokens");
 
@@ -27,12 +28,13 @@ con.on("open", () => {
 const app = express();
 app.use(morgan());
 app.use(express.json());
+app.use(cors());
 
 const createWarrantiesRouter = require("./routers/create-warranty");
 const burnWarrantiesRouter = require("./routers/burn-expired-warranty");
 const viewWarrantiesRouter = require("./routers/view-warranty");
 
-app.use("/createWarrantyTokens", createWarrantiesRouter);
+app.use("/createWarrantyToken", createWarrantiesRouter);
 app.use("/deleteExpiredTokens", burnWarrantiesRouter);
 app.use("/viewWarrantyTokens", viewWarrantiesRouter);
 
