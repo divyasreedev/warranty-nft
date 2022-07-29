@@ -29,10 +29,10 @@ const tokenUri = {
 };
 
 // Call mintNFT function
-const mintNFT = async () => {
+const mintNFT = async (recipient, metadata) => {
   let nftTxn = await myNftContract.mintNFT(
-    "0xDE4A952a256F730Fa518a3d1507F8624a2DcB0C6",
-    tokenUri
+    recipient,
+    metadata
   );
   await nftTxn.wait();
   return myNftContract.tokenIds;
