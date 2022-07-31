@@ -19,22 +19,15 @@ const contractAddress = process.env.CONTRACT_ADDRESS;
 // Create a contract instance
 const myNftContract = new ethers.Contract(contractAddress, abi, signer);
 
-// Get the NFT Metadata IPFS URL
-const tokenUri = {
-  productId: "123",
-  walletAddress: "678",
-  warrantyDetails: "hello world",
-  issueDate: "23-45-2001",
-  expirationDate: "06-09-2001",
-};
 
 // Call mintNFT function
-const mintNFT = async () => {
+const mintNFT = async (recipient, metadataUrl) => {
   let nftTxn = await myNftContract.mintNFT(
-    "0xDE4A952a256F730Fa518a3d1507F8624a2DcB0C6",
-    tokenUri
+    recipient,
+    metadataUrl
   );
   await nftTxn.wait();
+  console.log('NFT minted successfully.');
   return myNftContract.tokenIds;
 };
 // mintNFT();
