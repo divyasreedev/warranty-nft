@@ -40,9 +40,9 @@ app.use("/viewWarrantyTokens", viewWarrantiesRouter);
 
 app.listen(process.env.PORT_NUMBER, () => {
   console.log(`Server has started on port ${process.env.PORT_NUMBER}`);
-  //   setInterval(async () => {
-  //     // console.log('Starting Execution');
-  //     // setTimeout(() => console.log('Operation done'), 2000);
-  //     burnExpiredTokens();
-  //   }, 1000);
+    setInterval(async () => {
+      // console.log('Starting Execution');
+      // setTimeout(() => console.log('Operation done'), 2000);
+      burnExpiredTokens();
+    }, 1000);
 });

@@ -31,16 +31,20 @@ const burnNFT = async (tokenId) => {
 };
 
 const burnExpiredTokens = async () => {
+  
   const dbResponse = await warrantySchema.find({
     expirationDate: { $lte: Date.now() },
   });
-  //console.log(dbResponse);
+
+  // console.log(dbResponse);
+  
+  dbResponse.forEach(async entry =>  {
+    await burnNFT(entry.tokenId);
+  });
+
   const res = await warrantySchema.deleteMany({
     expirationDate: { $lte: Date.now() },
   });
-  // tokenIds.forEach(tokenId => {
-  //     await burnNFT(tokenId);
-  // });
 };
 
 module.exports = burnExpiredTokens;

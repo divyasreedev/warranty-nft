@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const warrantySchema = new mongoose.Schema({
+  tokenId: {
+    type: String,
+    required: false
+  },
   productId: {
     type: String,
     required: true,

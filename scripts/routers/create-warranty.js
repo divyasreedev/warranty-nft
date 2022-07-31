@@ -2,10 +2,21 @@ const express = require("express");
 const router = express.Router();
 const warrantySchema = require("../models/warranty");
 const mintNFT = require('../services/mint-warranty-token');
+const uploadMetadata = require('../services/upload-metadata');
 
 router.post("/", async (req, res) => {
   try {
+    const metadataId = await uploadMetadata({
+      productId: req.body.productId,
+      walletAddress: req.body.walletAddress,
+      warrantyDetails: req.body.warrantyDetails,
+      issueDate: req.body.issueDate,
+      expirationDate: req.body.expirationDate,
+      
+    }); 
+    const tokenId = await mintNFT(req.body.walletAddress, `https://api.jsonbin.io/v3/b/${metadataId}` );
     const warranty = new warrantySchema({
+      tokenId: tokenId,
       productId: req.body.productId,
       walletAddress: req.body.walletAddress,
       warrantyDetails: req.body.warrantyDetails,
@@ -13,13 +24,6 @@ router.post("/", async (req, res) => {
       expirationDate: req.body.expirationDate,
     });
     const dbResponse = await warranty.save();
-    mintNFT("0xDE4A952a256F730Fa518a3d1507F8624a2DcB0C6", {
-      productId: req.body.productId,
-      walletAddress: req.body.walletAddress,
-      warrantyDetails: req.body.warrantyDetails,
-      issueDate: req.body.issueDate,
-      expirationDate: req.body.expirationDate,
-    });
     res.status(200).send({
       status: "success",
     });
