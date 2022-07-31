@@ -1,34 +1,60 @@
-*{
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    letter-spacing: 0.3px;
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.3px;
 }
 
-body{
-    background-color: rgb(106, 129, 148);
+body {
+  background-color: rgb(106, 129, 148);
 }
 
-h1{
-    color:aliceblue;
-    font-size: x-large;
-    font-weight: 400;
+h1 {
+  color: aliceblue;
+  font-size: x-large;
+  font-weight: 400;
 }
 
-.card{
-    background-color: aliceblue;
-    cursor: pointer;
-    color:rgb(51, 60, 67);
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    text-align: center;
-    height: 200px;
-    border-radius: 1.5rem;
-    margin: 1.5rem;
-    transition: 0.3s;
+.card {
+  background-color: aliceblue;
+  cursor: pointer;
+  color: rgb(51, 60, 67);
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+  height: 200px;
+  border-radius: 1.5rem;
+  margin: 1.5rem;
+  transition: 0.3s;
 }
-.card:hover{
-    transform: scale(1.05);
-    color:rgb(13, 15, 16);
-    box-shadow: 2px 4px rgb(88, 108, 123);
+.card:hover {
+  transform: scale(1.05);
+  color: rgb(13, 15, 16);
+  box-shadow: 2px 4px rgb(88, 108, 123);
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: #ff3d00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-top: 20%;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-text {
+  color: white;
 }
