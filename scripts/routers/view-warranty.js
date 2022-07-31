@@ -1,54 +1,37 @@
 const express = require("express");
-const https = require("https");
-const bodyParser = require("body-parser");
-
 const router = express.Router();
 
-router.use(bodyParser.urlencoded({extended: true}));
-
-router.get("/", function(req, res){
-    res.sendFile(__dirname + "/index.html");
-});
-
-router.post("/", function(req, res){
-    const owner = req.body.owner;
-    const url = "https://eth-goerli.alchemyapi.io/nft/v2/demo/getNFTs/?owner=" + owner;
-
-    https.get(url, function(response){
-        console.log(response.statusCode);
-
-        response.on("data", function(data){
-            const info = JSON.parse(data);
-            const walletAddress = info.ownedNfts[0].contract.address;
-
-            console.log(walletAddress);
-            res.write("The wallet address is: " + walletAddress);
-            res.send();
-        });
+router.get("/", async (req, res) => {
+  var data = [];
+  try {
+    const walletAddress = req.query.walletAddress;
+    const url = `https://eth-goerli.alchemyapi.io/nft/v2/demo/getNFTs/?owner=${walletAddress}&contractAddresses=${process.env.CONTRACT_ADDRESS}`;
+    let response = await fetch(url);
+    response = await response.json();
+    response.ownedNfts.forEach(async (nft) => {
+      let metadataUrl = nft.tokenUri.raw;
+      console.log(metadataUrl);
+      try {
+        let metadataResponse = await fetch(`${metadataUrl}`);
+        let metadata = await metadataResponse.json();
+        if (metadata?.record != undefined) {
+          let warrantyInfo = {
+            productId: metadata.record.productId,
+            warrantyDetails: metadata.record.warrantyDetails,
+            issueDate: metadata.record.issueDate,
+            expirationDate: metadata.record.expirationDate,
+          };
+          data.push(warrantyInfo);
+          console.log(data);
+        }
+      } catch (e) {}
     });
+  } catch (e) {
+    res.status(500).send({
+      status: "error",
+      error: e,
+    });
+  }
 });
+
 module.exports = router;
-
-
-
-
-
-// const express = require('express');
-// const router = express.Router();
-// const warrantySchema = require('../models/warranty');
-
-// router.get('/', async (req, res) =>  {
-//     try {
-//         //const dbResponse = await warrantySchema.find({});
-//         //const dbResponse = await warrantySchema.find({expirationDate: {$gte: Date.now()}});
-//         res.status(200).send({
-//             "activeWarranties": dbResponse,
-//         });
-//     } catch(e) {
-//         res.status(500).send({
-//             "Error Caught": e,
-//         })
-//     }
-// });
-
-// module.exports = router;
